@@ -1,0 +1,94 @@
+<!doctype html>
+<html ng-app>
+<head>
+    <title>GITHUT API desde Angular</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/4.0/1/MicrosoftAjax.js"></script>
+    <script type="text/javascript">
+      var ServiceController = function ($scope, $http) {
+        $scope.nombre = 'JamesNK';
+		    $scope.users = {avatar_url:'GitHub-Mark-64px.png'};
+
+        $scope.getPerson = function () {	
+          $http.get('http://api.github.com/users/' + $scope.nombre)
+  				.success(function (data) {
+  				    $scope.users = data;
+  				    $scope.ErrorMessage = '';
+  				})
+  				.error(function (data) {
+  				    console.log('Error: ' + data);
+  				});
+        };
+        $scope.getRepos = function () {  
+          $http.get('https://api.github.com/users/'+ $scope.nombre +'/repos')
+          .success(function (data) {
+              $scope.repos = data;
+              $scope.ErrorMessage = '';
+          })
+          .error(function (data) {
+              console.log('Error: ' + data);
+          });
+        };
+        $scope.getReposDetails = function ($asd) {  
+          $http.get('https://api.github.com/repos/'+ $scope.nombre + '/' + $asd)
+          .success(function (data) {
+              $scope.details = data;
+              $scope.ErrorMessage = '';
+          })
+          .error(function (data) {
+              console.log('Error: ' + data + '; https://api.github.com/users/'+ $scope.nombre + '/' + $asd);
+          });
+        };
+       //https://api.github.com/repos/JamesNK/Newtonsoft.Json
+
+
+      };
+    </script>
+</head>
+<body>
+<div class="container">
+  <div ng-controller="ServiceController">
+    <input type="text" ng-model="nombre">
+    <input type="button" ng-click="getPerson();" value="Consultar">
+    <hr />
+
+    <span>NOMBRE: </span>{{users.login}}</br>
+    <span>ID: </span>{{users.id}}</br>
+    <img src="{{users.avatar_url}}" alt="Imagen del Usuario" width="100px" height="100px"></br>
+    <span>URL: </span><a href="{{users.html_url}}" target="_blank">{{users.html_url}}</a> </br>
+    <span>FECHA DE CREACION: </span>{{users.created_at}}</br>
+    
+    <hr />
+
+
+    <input type="button" ng-click="getRepos();" value="Consultar Repos de {{nombre}}">
+    <hr />
+<div class="row">
+  <div class="col-md-6"  style="height:250px; overflow-y:scroll;">
+
+    <div class="well" ng-repeat="dato in repos">
+      <b>ID: </b>{{dato.id}}
+      <a href="{{dato.html_url}}" target="_blank">{{dato.name | uppercase}}</a><span>: </span>
+      <p>{{dato.description}}</p><br>
+      <span>FECHA DE CREACION: </span>{{dato.created_at}}</br>
+      <input type="button" ng-click="getReposDetails(dato.name);" value="Detalle">
+    </div>    
+
+  </div>
+
+  <div class="col-md-6">
+    <h1>Detalles: {{details.name}}</h1>
+    <span>id: </span>{{details.id}}</br>
+    <span>language: </span>{{details.language}}</br>
+    <span>open_issues: </span>{{details.open_issues}}</br>
+  </div>
+</div>
+
+
+  </div>
+</div>  
+</body>
+</html>
