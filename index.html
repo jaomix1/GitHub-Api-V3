@@ -13,7 +13,7 @@
 		    $scope.users = {avatar_url:'GitHub-Mark-64px.png'};
 
         $scope.getPerson = function () {	
-          $http.get('http://api.github.com/users/' + $scope.nombre)
+          $http.get('https://api.github.com/users/' + $scope.nombre)
   				.success(function (data) {
   				    $scope.users = data;
   				    $scope.ErrorMessage = '';
