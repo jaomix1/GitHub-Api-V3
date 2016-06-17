@@ -1,0 +1,21 @@
+﻿<h1>Inicio</h1>
+<div>
+	<div>
+
+    <input type="text" ng-model="nombre">
+    <input type="button" ng-click="getPerson();" value="Consultar">
+    <hr />
+
+    <span>NOMBRE: </span>{{users.login}}</br>
+    <span>ID: </span>{{users.id}}</br>
+    <img src="{{users.avatar_url}}" alt="Imagen del Usuario" width="100px" height="100px"></br>
+    <span>URL: </span><a href="{{users.html_url}}" target="_blank">{{users.html_url}}</a> </br>
+    <span>FECHA DE CREACION: </span>{{users.created_at}}</br>
+    
+    <hr />
+	
+	<a href="/#/View/b/">Detalles</a>
+	<br/>
+	
+	</div>
+</div>
