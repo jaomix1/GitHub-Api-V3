@@ -1,0 +1,32 @@
+﻿<a href="/#/View/a/">Inicio</a>
+<br/>
+
+<h1>Detalle: {{nombre}}</h1>
+<div>
+	<div>		
+
+    <hr />
+		<div class="row">
+		<div class="col-md-6"  style="height:400px; overflow-y:scroll;">
+
+		<div class="well" ng-repeat="dato in repos">
+			  <b>ID: </b>{{dato.id}}
+			  <a href="{{dato.html_url}}" target="_blank">{{dato.name | uppercase}}</a><span>: </span>
+			  <p>{{dato.description}}</p><br>
+			  <span>FECHA DE CREACION: </span>{{dato.created_at}}</br>
+			  <input type="button" ng-click="getReposDetails(dato.name);" value="Mas">
+		</div>    
+
+	  </div>
+
+	  <div class="col-md-6">
+		<h1>MAS: {{details.name}}</h1>
+		<span>id: </span>{{details.id}}</br>
+		<span>language: </span>{{details.language}}</br>
+		<span>open_issues: </span>{{details.open_issues}}</br>
+	  </div>
+</div>
+
+			
+    </div>
+</div>
