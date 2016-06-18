@@ -13,7 +13,7 @@ myControllers.controller('controllerA', ['$scope','$http','UserService',
 				console.log('Se ejecuto: : ' + 'https://api.github.com/users/' + $scope.nombre);
 			})
 			.error(function (data) {
-				console.log('Error: ' + data);
+				console.log('Error al consultar la api: ' + data);
 			});
 		};
 	}
@@ -30,7 +30,7 @@ myControllers.controller('controllerB', ['$scope','$http','UserService',
 			console.log('Se ejecuto: ' + 'https://api.github.com/users/'+ $scope.nombre +'/repos');
 		})
 		.error(function (data) {
-			console.log('Error: ' + data);
+			console.log('Error al consultar la api: ' + data);
 		});
 	
 		$scope.getReposDetails = function ($repoName) {  
@@ -40,7 +40,7 @@ myControllers.controller('controllerB', ['$scope','$http','UserService',
 				console.log('Se ejecuto: : ' + 'https://api.github.com/repos/'+ $scope.nombre + '/' + $repoName);
 			})
 			.error(function (data) {
-				console.log('Error: ' + data);
+				console.log('Error al consultar la api: ' + data);
 			});
 		};	
 	}
