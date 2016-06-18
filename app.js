@@ -5,9 +5,9 @@ var miApp = angular.module('miApp', [
 
 miApp.factory('UserService',function() {
 	return {
-      nombre : 'Jaomix1',
+      nombre : 'kelemen',
 	  avatar_url:'GitHub-Mark-64px.png',
-	  login : 'jaomix1'
+	  login : 'kelemen'
 	};
 });
 

@@ -9,12 +9,12 @@
 		<div class="row">
 		<div class="col-md-6"  style="height:400px; overflow-y:scroll;">
 
-		<div class="well" ng-repeat="dato in repos">
-			  <b>ID: </b>{{dato.id}}
-			  <a href="{{dato.html_url}}" target="_blank">{{dato.name | uppercase}}</a><span>: </span>
-			  <p>{{dato.description}}</p><br>
-			  <span>FECHA DE CREACION: </span>{{dato.created_at}}</br>
-			  <input type="button" ng-click="getReposDetails(dato.name);" value="Mas">
+		<div class="well" ng-repeat="repo in repos">
+			  <b>ID: </b>{{repo.id}}
+			  <a href="{{repo.html_url}}" target="_blank">{{repo.name | uppercase}}</a><span>: </span>
+			  <p>{{repo.description}}</p><br>
+			  <span>FECHA DE CREACION: </span>{{repo.created_at}}</br>
+			  <input type="button" ng-click="getReposDetails(repo.name);" value="Mas">
 		</div>    
 
 	  </div>

@@ -34,8 +34,8 @@ myControllers.controller('controllerB', ['$scope','$http','UserService',
 		});
 
 	
-	$scope.getReposDetails = function ($asd) {  
-		$http.get('https://api.github.com/repos/'+ $scope.nombre + '/' + $asd)
+	$scope.getReposDetails = function ($repoName) {  
+		$http.get('https://api.github.com/repos/'+ $scope.nombre + '/' + $repoName)
 		.success(function (data) {
 			$scope.details = data;
 			$scope.ErrorMessage = '';
