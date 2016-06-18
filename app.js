@@ -7,7 +7,6 @@ miApp.factory('UserService',function() {
 	return {
       nombre : 'kelemen',
 	  avatar_url:'GitHub-Mark-64px.png',
-	  login : 'kelemen'
 	};
 });
 
