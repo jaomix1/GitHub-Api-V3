@@ -1,51 +1,137 @@
-﻿<a href="#/View/a/">Inicio</a>
-<br/>
-
-<h1>Detalle: {{nombre}}</h1>
+﻿<div class="page-header">
+  <h1>{{repoNombre}} <small>{{details.owner.login}}</small></h1>
+</div>
 <div>
 	<div>		
-		<input type="text" ng-model="repoNombre">	
+		<div class="row">
+				<span>ID USER: </span>{{users.id}}</br>
+				<img src="{{users.avatar_url}}" alt="Imagen del Usuario" width="100px" height="100px"></br>
+				<span>URL: </span><a href="{{users.html_url}}" target="_blank">{{users.html_url}}</a> </br>
+				<span>FECHA DE CREACION: </span>{{users.created_at}}</br>
+				<hr />
+				<strong>DESCRIPCION PROYECT: </strong>{{details.description}}</br>
+				<strong>ID: </strong>{{details.id}}</br>
+				<strong>LEGUAJE: </strong>{{details.language}}</br>
+				<strong>ISSUES Abiertos: </strong>{{details.open_issues}}</br>
+				<strong>FECHA DE CREACION: </strong>{{details.created_at}}</br>
+				<strong>FECHA DE ACTUALIZACION: </strong>{{details.updated_at}}</br>
+				<strong>TAMAÑO: </strong>{{details.size}}</br>
+				
+				
+			</div>
+		</div>
 		<hr/>
 		
-		<div class="row" style="height:200px; overflow-y:scroll;">
-				<div class="col-md-12 well" ng-repeat="repo in repos | filter : repoNombre">
-					<b>ID: </b>{{repo.id}}
-					<a href="{{repo.html_url}}" target="_blank">{{repo.name | uppercase}}</a><span>: </span>
-					<p>{{repo.description}}</p><br>
-					<span>FECHA DE CREACION: </span>{{repo.created_at}}</br>
-					<input type="button" ng-click="getReposDetails(repo.name);" value="Mas">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="col-md-12" style="background-color:#BDBDBD">
+					TIPO DE GRAFICA: 
+					<label>
+						<input type="radio" ng-model="grafica" value="Barra">
+						Barra
+					</label>
+					<label>
+						<input type="radio" ng-model="grafica" value="Pastel" select>
+						Pastel
+					</label>
+				</div>	
+				<div class="col-md-6" style="vertical-align: middle;background-color:#F2F2F2">
+					<b>Pagina: </b>
+					<input type="number" ng-model="pagina" name="pagina" min="1" max="13" ><br/>				
+					<input type="button" ng-click="getReposDetailsCommits(pagina);" value="VER COMMITS">
+					<br>Se visualizan max 200 por pagina
 				</div>
-		</div>
-		<hr/>
-		<div class="row">
-			<div class="col-md-12 well">
-				<h1>MAS:</h1>
-				<h2>{{details.name}}</h2>
-				<span>ID: </span>{{details.id}}</br>
-				<span>LEGUAJE: </span>{{details.language}}</br>
-				<span>ISSUES Abiertos: </span>{{details.open_issues}}</br>
-				<span>FECHA DE CREACION: </span>{{details.created_at}}</br>
-				<span>FECHA DE ACTUALIZACION: </span>{{details.updated_at}}</br>
-				<span>TAMAÑO: </span>{{details.size}}</br>
-				<input type="button" ng-click="getReposDetailsCommits(details.name);" value="VER COMMITS">
+				<div class="col-md-6" style="vertical-align: middle;background-color:#F2F2F2">	
+					</br>
+					<input type="button" ng-click="getReposDetailsContributors();" value="VER CONTRIBUIDORES">	
+					</br>
+				</div>
+				
+			</div>
+			<div class="col-md-4"  style="vertical-align: middle;background-color:#F2F2F2">
+				</br></br>				
+				<input type="button" ng-click="getReposDetailsIssues();" value="VER ISSUES">
+				<br>Se consultan hasta max 300 datos
+								
 			</div>
 		</div>
 		<hr/>
-		<div class="row">
-			<div class="col-md-12" style="height:200px; overflow-y:scroll;">
-				<div class="well" ng-repeat="comit in comits">
-					<b>AUTOR: </b>{{comit.commit.author.name}}</br>
-					<b>FECHA: </b>{{comit.commit.author.date}}</br>
-					<b>MENSAJE: </b>{{comit.commit.message}}</br>			  
-				</div>  
+		
+		<div ng-show="visibleCommits">
+			<div class="row">
+				<div class="col-md-12">	
+					<div id="CalendarioDiv"></div>
+				</div>
+			</div>		
+			<hr/>
+			<div class="row">
+				<div class="col-md-4">					
+					<div id="PastelDiv"></div>									
+				</div>	
+				<div class="col-md-8">
+					<b>Filtro:<b/>
+					<input type="input" ng-model="filtro" ><br/>
+					<div style="height:800px; overflow-y:scroll;">
+						
+						<div class="well" ng-repeat="comit in comits | orderBy : 'commit.author.date' | filter : filtro">
+							<b>{{$index + 1}}</b>
+							<b>AUTOR: </b>{{comit.commit.author.name}}</br>
+							<b>FECHA: </b>{{comit.commit.author.date}}</br>
+							<b>MENSAJE: </b>{{comit.commit.message}}</br>			  
+						</div>  
+					</div>
+				</div>
 			</div>
+			<hr/>
 		</div>
-		<hr/>
-		<div class="row">
-			<div class="col-md-12">					
-				<div id="PastelDiv"></div>					
-				<div id="CalendarioDiv"></div>						
-			</div>	
+		<div ng-show="visibleContributors">
+			<div class="row">
+				<div class="col-md-12">	
+					<div id="PastelDiv2"></div>
+					<br> En esta grafica se ignoraron los datos de autor <b> {{details.owner.login}} </b> que son <b>{{ ContributorsAutor}}</b> contribuciones
+				</div>
+			</div>		
+			<hr/>
+			<div class="row">
+				<div class="">
+					<div class="well col-md-4" ng-repeat="contributor in contributors">
+						<b>{{$index + 1}}</b>
+						<b>CONTRIBUIDOR: </b>{{contributor.login}}</br>
+						<b>ID: </b>{{contributor.id}}</br>
+						<b># DE CONTRIBUCIONES: </b>{{contributor.contributions}}</br>
+						<img src="{{contributor.avatar_url}}" alt="Imagen del contributor" width="100px" height="100px"></br>		
+						<span>URL: </span><a href="{{contributor.html_url}}" target="_blank">{{contributor.html_url}}</a> </br>
+								
+					</div>  
+				</div>
+			</div>
+			<hr/>
+		</div>
+		<div ng-show="visibleIssues">
+			<div class="row">
+				<div class="col-md-6">	
+					<div id="PastelDiv3"></div>
+				</div>
+				<div class="col-md-6">
+					<b>Filtro:<b/>
+					<input type="input" ng-model="filtro2" ><br/>
+					<div style="height:4000px; overflow-y:scroll;">
+						<div class="well " ng-repeat="issue in issues | orderBy : 'created_at' | filter : filtro2">
+							<b>{{$index + 1}}</b>
+							<b>AUTOR: </b>{{issue.user.login}}</br>
+							<b>ID: </b>{{issue.id}}</br>
+							<b>ESTADO: </b>{{issue.state}}</br>
+							<strong>FECHA DE CREACION: </strong>{{issue.created_at}}</br>
+							<strong>FECHA DE ACTUALIZACION: </strong>{{issue.updated_at}}</br>
+							<strong>FECHA DE CIERRE: </strong>{{issue.closed_at}}</br>
+							
+							<b>MENSAJE: </b>{{issue.body}}</br>	
+							
+						</div>  
+					</div>
+				</div>
+			</div>
+			<hr/>
 		</div>
 	</div>
 </div>

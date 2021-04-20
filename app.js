@@ -9,6 +9,7 @@
 
 google.load("visualization", '1', {packages:["calendar"]});
 google.load("visualization", '1', {packages:["PieChart"]});
+google.load("visualization", '1', {packages:["corechart"]});
 
 google.setOnLoadCallback(function() {
 	//angular.bootstrap(document.body, ['miApp']);
@@ -44,7 +45,7 @@ miApp.config(['$routeProvider',
 			controller: 'controllerB'
 		}).
 		otherwise({
-			redirectTo: '/View/a/'
+			redirectTo: '/View/b/'
 		});
 				
 }]);
