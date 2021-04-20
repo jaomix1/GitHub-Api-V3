@@ -26,10 +26,10 @@ var miApp = angular.module('miApp', [
 
 miApp.factory('UserService',function() {
 	return {
-      //nombre : 'Jaomix1',
-	  nombre : 'kelemen',
+      nombre : 'Jaomix1',
+	  //nombre : 'kelemen',
 	  avatar_url:'GitHub-Mark-64px.png',
-	  repoNombre: 'netbeans-gradle-project'
+	  repoNombre: 'GitHub-Api-V3'
 	};
 });
 
